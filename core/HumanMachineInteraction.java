@@ -173,7 +173,7 @@ class HumanMachineInteraction {
             }
         }
         
-        System.out.println("\nClosing the game.");
+        System.out.println("\n\nClosing the game.");
     }
 
     private enum ResultType {
