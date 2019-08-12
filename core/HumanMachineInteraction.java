@@ -165,7 +165,7 @@ class HumanMachineInteraction {
             }
         } else {
             try {
-                System.out.print("I couldn't guess your word.");
+                System.out.println("I couldn't guess your word.");
                 
                 updateResult(ResultType.WRONG);
             } catch (IOException err) {
@@ -173,7 +173,7 @@ class HumanMachineInteraction {
             }
         }
         
-        System.out.println("\n\nClosing the game.");
+        System.out.println("\nClosing the game.");
     }
 
     private enum ResultType {
