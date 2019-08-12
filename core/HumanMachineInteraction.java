@@ -51,6 +51,9 @@ class HumanMachineInteraction {
 
     ArrayList<Integer> checkLetter(String letter, String[] word) {
         System.out.println("\n-----------------------------------------------");
+
+        printWord(word);
+
         String doesContain;
         while (true) {
             System.out.print(String.format("\nDoes your word contain the letter '%s'? Y/N: ", letter));
@@ -120,6 +123,19 @@ class HumanMachineInteraction {
         }
 
         return positions;
+    }
+
+    private void printWord(String[] word) {
+        System.out.print("Your word:");
+        for(String letter: word) {
+            if (letter == null) {
+                System.out.print(" _");
+            } else {
+                System.out.print(" " + letter);
+            }
+        }
+
+        System.out.println();
     }
 
     void handleResult(boolean areGuessesLeft, String[]  word) {
