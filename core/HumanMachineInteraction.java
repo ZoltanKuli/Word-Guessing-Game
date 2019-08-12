@@ -152,7 +152,7 @@ class HumanMachineInteraction {
 
                     saveGuessedWord(word);
                 } catch (IOException err) {
-                    System.out.println("Could't update statistics.\n");
+                    System.out.println("\nCould't update statistics.");
                 }
             } else {
                 try {
@@ -160,7 +160,7 @@ class HumanMachineInteraction {
                     
                     updateResult(ResultType.WRONG);
                 } catch (IOException err) {
-                    System.out.println("Could't update statistics.\n");
+                    System.out.println("\nCould't update statistics.");
                 }
             }
         } else {
@@ -169,9 +169,11 @@ class HumanMachineInteraction {
                 
                 updateResult(ResultType.WRONG);
             } catch (IOException err) {
-                System.out.println("Could't update statistics.\n");
+                System.out.println("\nCould't update statistics.");
             }
         }
+        
+        System.out.println("\nClosing the game.");
     }
 
     private enum ResultType {
