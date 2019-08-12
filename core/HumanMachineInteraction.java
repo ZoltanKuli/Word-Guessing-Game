@@ -146,31 +146,31 @@ class HumanMachineInteraction {
 
             if (input.toLowerCase().contains("y")) {
                 try {
+                    System.out.println("Great, I guessed your word!");
+                    
                     updateResult(ResultType.RIGHT);
 
                     saveGuessedWord(word);
                 } catch (IOException err) {
                     System.out.println("Could't update statistics.\n");
                 }
-
-                System.out.println("Great, I guessed your word!");
             } else {
                 try {
+                    System.out.println("I couldn't guess your word, but maybe next time.");
+                    
                     updateResult(ResultType.WRONG);
                 } catch (IOException err) {
                     System.out.println("Could't update statistics.\n");
                 }
-
-                System.out.println("I couldn't guess your word, but maybe next time.");
             }
         } else {
             try {
+                System.out.print("I couldn't guess your word.");
+                
                 updateResult(ResultType.WRONG);
             } catch (IOException err) {
                 System.out.println("Could't update statistics.\n");
             }
-
-            System.out.print("I couldn't guess your word.");
         }
     }
 
