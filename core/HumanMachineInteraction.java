@@ -126,7 +126,7 @@ class HumanMachineInteraction {
     }
 
     private void printWord(String[] word) {
-        System.out.print("Your word:");
+        System.out.print("\nYour word:");
         for(String letter: word) {
             if (letter == null) {
                 System.out.print(" _");
