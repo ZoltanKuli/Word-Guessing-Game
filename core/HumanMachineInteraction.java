@@ -14,8 +14,8 @@ class HumanMachineInteraction {
     private final int wordLength;
 
     static {
-        resultsPath = "src\\statistics\\results.txt";
-        guessedWordsPath = "src\\statistics\\guessed_words.txt";
+        resultsPath = "statistics\\results.txt";
+        guessedWordsPath = "statistics\\guessed_words.txt";
     }
 
     HumanMachineInteraction() {
