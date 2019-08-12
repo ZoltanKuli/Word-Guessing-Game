@@ -1,0 +1,6 @@
+Words used by the Word Guessing Game are downloaded from the following source:
+
+https://github.com/first20hours/google-10000-english/blob/master/README.md
+
+Big thanks to those who collected them!
+Their list of words enables the Word Guessing Game to operate more precisely and effectively.
