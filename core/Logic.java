@@ -19,7 +19,7 @@ public class Logic {
     private String[] word;
 
     static {
-        possibleWordsPath = "src\\assets\\words-20000.txt";
+        possibleWordsPath = "assets\\words-20000.txt";
 
         alphabet = "abcdefghijklmnopqrstuvwxyz";
     }
