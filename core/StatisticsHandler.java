@@ -3,7 +3,7 @@ package core;
 import java.io.*;
 import java.util.ArrayList;
 
-public class StatisticsHandler {
+class StatisticsHandler {
     enum ResultType {
         RIGHT(1),
         WRONG(3);
