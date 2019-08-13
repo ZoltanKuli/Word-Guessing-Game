@@ -21,28 +21,45 @@ class HumanMachineInteraction {
 
     void scanWordLength() {
         while (true) {
-            int input;
             System.out.print("Between 2 and 15 characters, how long is your word? ");
-            try {
-                input = this.scanner.nextInt();
-            } catch (InputMismatchException err) {
-                this.scanner.next();
-                System.out.println("Invalid input.\n");
+            int length = scanIntInput();
+
+            if (!trueOnGoodWordLength(length)) {
                 continue;
             }
 
-            if (input < 2) {
-                System.out.println("Your chosen word is too short.\n");
-                continue;
-            } else if (input > 15) {
-                System.out.println("Your chosen word is too long.\n");
-                continue;
-            }
-
-            this.wordLength = input;
+            this.wordLength = length;
             System.out.println(String.format("Your word is %d characters long.", this.wordLength));
             break;
         }
+    }
+
+    private boolean trueOnGoodWordLength(int length) {
+        if (length < 2) {
+            System.out.println("Your chosen word is too short.\n");
+            return false;
+        } else if (length > 15) {
+            System.out.println("Your chosen word is too long.\n");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private int scanIntInput() {
+        int input;
+
+        while (true) {
+            try {
+                input = this.scanner.nextInt();
+                break;
+            } catch (InputMismatchException err) {
+                this.scanner.next();
+                System.out.println("Invalid input.\n");
+            }
+        }
+
+        return input;
     }
 
     int getWordLength() {
@@ -52,9 +69,19 @@ class HumanMachineInteraction {
     ArrayList<Integer> checkLetter(String letter, String[] word) {
         System.out.println("\n-----------------------------------------------");
 
-        printWord(word);
+        printWordWithUnderscores(word);
 
+        ArrayList<Integer> positions = new ArrayList<>();
+        if (trueOnCorrectLetter(letter)) {
+            positions = getLetterPositions(letter, word);
+        }
+
+        return positions;
+    }
+
+    private boolean trueOnCorrectLetter(String letter) {
         String doesContain;
+
         while (true) {
             System.out.print(String.format("\nDoes your word contain the letter '%s'? Y/N: ", letter));
             try {
@@ -68,64 +95,71 @@ class HumanMachineInteraction {
             break;
         }
 
+        return doesContain.toLowerCase().contains("y");
+    }
+
+    private ArrayList<Integer> getLetterPositions(String letter, String[] word) {
         ArrayList<Integer> positions = new ArrayList<>();
-        if (doesContain.toLowerCase().contains("y")) {
-            while (true) {
-                System.out.print(String.format("\nBetween 1 and %d,", this.wordLength));
-                System.out.print(String.format(" at which position is the letter '%s'? ", letter));
-                try {
-                    int position = this.scanner.nextInt() - 1;
 
-                    if (position < 0) {
-                        System.out.println("The position you specified is too small.");
-                        continue;
-                    } else if (position >= this.wordLength) {
-                        System.out.println("The position you specified is too large.");
-                        continue;
-                    }
+        while (true) {
+            System.out.print(String.format("\nBetween 1 and %d,", this.wordLength));
+            System.out.print(String.format(" at which position is the letter '%s'? ", letter));
+            try {
+                int position = this.scanner.nextInt() - 1;
 
-                    if (word[position] != null | positions.contains(position)) {
-                        System.out.println("You've already specified this position.");
-                        continue;
-                    }
-
-                    positions.add(position);
-                    word[position] = letter;
-                } catch (InputMismatchException err) {
-                    this.scanner.next();
-                    System.out.println("Invalid input.");
+                if (position < 0) {
+                    System.out.println("The position you specified is too small.");
+                    continue;
+                } else if (position >= this.wordLength) {
+                    System.out.println("The position you specified is too large.");
                     continue;
                 }
 
-                // Check if word is full
-                boolean isGuessed = true;
-                for (String character: word) {
-                    if (character == null) {
-                        isGuessed = false;
-                    }
+                if (word[position] != null | positions.contains(position)) {
+                    System.out.println("You've already specified this position.");
+                    continue;
                 }
 
-                if (!isGuessed && Arrays.asList(word).contains(null)) {
-                    System.out.print(String.format("\nDoes your word contain the letter '%s' at another position? Y/N: ", letter));
-                    try {
-                        String doesStillContain = this.scanner.next();
-                        if (!doesStillContain.toLowerCase().contains("y")) {
-                            break;
-                        }
-                    } catch (InputMismatchException err) {
-                        this.scanner.next();
-                        System.out.println("Invalid input.");
+                positions.add(position);
+                word[position] = letter;
+            } catch (InputMismatchException err) {
+                this.scanner.next();
+                System.out.println("Invalid input.");
+                continue;
+            }
+
+            if (!trueOnFullWord(word) && Arrays.asList(word).contains(null)) {
+                System.out.print(String.format("\nDoes your word contain the letter '%s' at another position? Y/N: ", letter));
+                try {
+                    String doesStillContain = this.scanner.next();
+                    if (!doesStillContain.toLowerCase().contains("y")) {
+                        break;
                     }
-                } else {
-                    break;
+                } catch (InputMismatchException err) {
+                    this.scanner.next();
+                    System.out.println("Invalid input.");
                 }
+            } else {
+                break;
             }
         }
 
         return positions;
     }
 
-    private void printWord(String[] word) {
+    private boolean trueOnFullWord(String[] word) {
+        boolean isFull = true;
+
+        for (String character: word) {
+            if (character == null) {
+                isFull = false;
+            }
+        }
+
+        return isFull;
+    }
+
+    private void printWordWithUnderscores(String[] word) {
         System.out.print("\nYour word:");
         for(String letter: word) {
             if (letter == null) {
@@ -141,42 +175,7 @@ class HumanMachineInteraction {
     void handleResult(boolean areGuessesLeft, String[]  word) {
         System.out.println("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         if (areGuessesLeft) {
-            System.out.print("Is this your word? '");
-            for (String letter: word) {
-                System.out.print(letter);
-            }
-            System.out.print("' Y/N: ");
-
-            String input;
-            while (true) {
-                try {
-                    input = this.scanner.next();
-                    break;
-                } catch (InputMismatchException err) {
-                    this.scanner.next();
-                    System.out.println("Invalid input.\n");
-                }
-            }
-
-            if (input.toLowerCase().contains("y")) {
-                try {
-                    System.out.println("Great, I guessed your word!");
-
-                   this.statisticsHandler.updateResult(StatisticsHandler.ResultType.RIGHT);
-
-                    this.statisticsHandler.saveGuessedWord(word);
-                } catch (IOException err) {
-                    System.out.println("\nCould't update statistics.");
-                }
-            } else {
-                try {
-                    System.out.println("I couldn't guess your word, but maybe next time.");
-
-                    this.statisticsHandler.updateResult(StatisticsHandler.ResultType.WRONG);
-                } catch (IOException err) {
-                    System.out.println("\nCould't update statistics.");
-                }
-            }
+            checkIfGuessedRight(word);
         } else {
             try {
                 System.out.println("I couldn't guess your word.");
@@ -188,5 +187,55 @@ class HumanMachineInteraction {
         }
 
         System.out.println("\nClosing the game.");
+    }
+
+    private void printWord(String[] word) {
+        for (String letter: word) {
+            System.out.print(letter);
+        }
+    }
+
+    private void checkIfGuessedRight(String[] word) {
+        System.out.print("Is this your word? '");
+        printWord(word);
+        System.out.print("' Y/N: ");
+
+        String input = scanStringInput();
+
+        if (input.toLowerCase().contains("y")) {
+            try {
+                System.out.println("Great, I guessed your word!");
+
+                this.statisticsHandler.updateResult(StatisticsHandler.ResultType.RIGHT);
+
+                this.statisticsHandler.saveGuessedWord(word);
+            } catch (IOException err) {
+                System.out.println("\nCould't update statistics.");
+            }
+        } else {
+            try {
+                System.out.println("I couldn't guess your word, but maybe next time.");
+
+                this.statisticsHandler.updateResult(StatisticsHandler.ResultType.WRONG);
+            } catch (IOException err) {
+                System.out.println("\nCould't update statistics.");
+            }
+        }
+    }
+
+    private String scanStringInput() {
+        String input;
+
+        while (true) {
+            try {
+                input = this.scanner.next();
+                break;
+            } catch (InputMismatchException err) {
+                this.scanner.next();
+                System.out.println("Invalid input.\n");
+            }
+        }
+
+        return input;
     }
 }
