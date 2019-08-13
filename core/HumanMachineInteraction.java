@@ -189,12 +189,6 @@ class HumanMachineInteraction {
         System.out.println("\nClosing the game.");
     }
 
-    private void printWord(String[] word) {
-        for (String letter: word) {
-            System.out.print(letter);
-        }
-    }
-
     private void checkIfGuessedRight(String[] word) {
         System.out.print("Is this your word? '");
         printWord(word);
@@ -220,6 +214,12 @@ class HumanMachineInteraction {
             } catch (IOException err) {
                 System.out.println("\nCould't update statistics.");
             }
+        }
+    }
+    
+    private void printWord(String[] word) {
+        for (String letter: word) {
+            System.out.print(letter);
         }
     }
 
