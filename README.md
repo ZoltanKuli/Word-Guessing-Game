@@ -1,7 +1,13 @@
-# The Story Behind Word Guessing Game
+# Word Guessing Game
 
-I made Word Guessing Game at the end of the summer of 2019, right before I started my Computer Science major.
+I made Word Guessing Game at the end of the summer of 2019, right before I started my Computer Science BSc.
 
-At the time, this was an interesting little project where I mainly learned about how to handle writing and reading from text files, handling user input, and handling exceptions.
+My main goal was to practice Java and get more comfortable with it.
 
-This project was also a good opportunity for me to get more comfortable with Java.
+# Skills Demonstrated
+* Created a console application that can guess which word the player is thinking of based on the most frequently occurring letters in the 20000 most common English words.
+* Implemented a feature that can store game statics in text files.
+
+# Technologies Used
+* Java
+* IntelliJ IDEA
