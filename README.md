@@ -6,7 +6,7 @@ My main goal was to practice Java.
 
 # Highlights
 * Created a console application that can guess which word the player is thinking of based on the most frequently occurring letters in the 20000 most common English words.
-* Implemented a feature that can store game statics in text files.
+* Implemented a feature that can store game statistics in text files.
 
 # Technologies Used
 * Java
